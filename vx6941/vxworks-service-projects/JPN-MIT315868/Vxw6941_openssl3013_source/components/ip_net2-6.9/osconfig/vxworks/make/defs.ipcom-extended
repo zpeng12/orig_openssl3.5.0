@@ -1,0 +1,48 @@
+# defs.ipcom-extended - make defines for extended IPCOM products
+#
+# Copyright (c) 2001-2006 Wind River Systems, Inc.
+#
+# The right to copy, distribute, modify or otherwise make use
+# of this software may be licensed only pursuant to the terms
+# of an applicable Wind River license agreement.
+# 
+#
+# modification history
+# --------------------
+# 01e,08sep09,spw  Add several components, as per WIND00179049
+# 01d,29jul09,ten  Add L2TP support
+# 01c,07aug07,mry  Add 802.1x supplicant support
+# 01b,19jun07,tpw  Use WRVX_COMPBASE vs. WIND_COMPONENTS correctly.
+# 01a,27nov06,tkf  created.
+#
+#
+# DESCRIPTION
+# This file is curently included in defs.ipcom to define macros that pertain
+# to requirements of IP products that are not included by default.
+#
+
+####
+# The following include pathes are required for applications that require to
+# include IPNET header files. It is assumed that all IP products contain their
+# publicly accessible header files in config and include directories.
+#
+#IPCOM_EXT_V4_PRODUCTS := ipmcp ipipsec2 ipike iphwcrypto ipcrypto ipssh ipmipfa \
+#                         ipmipha ipmipmn ipmpls ipeap ip8021x ipradius ipfirewall ipssl2 ipl2tp \
+#                         ipcavium ipdiameter ipfreescale ipmip4 ipmip ipmippm \
+#                         iprohc ipwlan ipxinc vxbridge vxdot1x wrsnmp
+
+IPCOM_EXT_V4_PRODUCTS := ipmcp ipipsec2 ipike iphwcrypto ipcrypto ipssh ipmipfa \
+                         ipmipha ipmipmn ipmpls ipeap ip8021x ipradius ipfirewall ipssl2 ipl2tp \
+                         ipcavium ipdiameter ipfreescale ipmip4 ipmip ipmippm \
+                         iprohc ipwlan vxbridge vxdot1x wrsnmp vxifproxy wrnad
+
+IPCOM_EXT_V6_PRODUCTS := ipmip6 ipmip6mn ipmip6ha ipmip6pm
+IPNET_TOP_DIR := $(subst \,/,$(WRVX_COMPBASE)/$(COMP_IPNET2))
+
+INCLUDE_IPCOM_CC += $(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/ipwlan/include
+INCLUDE_IPCOM_CC += $(foreach dir, $(IPCOM_EXT_V4_PRODUCTS),$(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/$(dir)/config)
+INCLUDE_IPCOM_CC += $(foreach dir, $(IPCOM_EXT_V4_PRODUCTS),$(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/$(dir)/include)
+INCLUDE_IPCOM_CC += $(foreach dir, $(IPCOM_EXT_V6_PRODUCTS),$(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/$(dir)/config)
+INCLUDE_IPCOM_CC += $(foreach dir, $(IPCOM_EXT_V6_PRODUCTS),$(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/$(dir)/include)
+INCLUDE_IPCOM_CC += $(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/ipcrypto/openssl-3_0_13/include
+INCLUDE_IPCOM_CC += $(OPTION_INCLUDE_DIR)$(IPNET_TOP_DIR)/ipssl2/openssl-3_0_13/include
